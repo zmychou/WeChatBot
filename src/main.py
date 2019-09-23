@@ -8,6 +8,8 @@ import time
 import hashlib
 import json
 
+from src.agent import run_main
+
 def _inflate_data(question, seeion='test'):
     param = {
         'app_id' : 2121794067,
@@ -42,7 +44,7 @@ def _think(hear):
     resp = request.urlopen(req)
     return resp.read()
 
-@itchat.msg_register(TEXT, isGroupChat=True)
+#@itchat.msg_register(TEXT, isGroupChat=True)
 def text_reply(msg):
     if msg.isAt:
         question = msg.text.replace('@周小明', '')
@@ -55,14 +57,9 @@ def text_reply(msg):
         msg.user.send(u'@%s\u2005%s' % (
             msg.actualNickName, resp))
 
-def login():
-    itchat.auto_login()
-def run_main():
-    login()
-    itchat.run(True)
-
-def test_func():
-    pass
+class Dummy():
+    verbose = True
 
 if __name__ == '__main__':
-    run_main()
+    args = Dummy()
+    run_main(args)
